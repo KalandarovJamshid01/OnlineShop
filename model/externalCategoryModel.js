@@ -19,6 +19,11 @@ externalCategorySchema.virtual("internalCategories", {
   localField: "_id",
   foreignField: "externalCategoryId",
 });
+externalCategorySchema.virtual("products", {
+  ref: "products",
+  localField: "_id",
+  foreignField: "externalCategoryId",
+});
 
 const ExternalCategory = mongoose.model(
   "externalCategories",

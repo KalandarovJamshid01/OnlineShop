@@ -7,9 +7,12 @@ const {
   update,
   deleteData,
 } = require("./handlerController");
+const options = {
+  path: "products",
+};
 
 const getAllIntCategories = (req, res, next) => {
-  getAll(req, res, next, IntCategory);
+  getAll(req, res, next, IntCategory, options);
 };
 
 const getOneIntCategory = (req, res, next) => {

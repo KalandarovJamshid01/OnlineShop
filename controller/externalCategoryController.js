@@ -11,9 +11,13 @@ const options = {
   path: "internalCategories",
   select: "name -externalCategoryId -_id",
 };
+const options2 = {
+  path: "products",
+  select: "name",
+};
 
 const getAllExtCategory = (req, res, next) => {
-  getAll(req, res, next, ExternalCategory, options);
+  getAll(req, res, next, ExternalCategory, options, options2);
 };
 
 const getOneExtCategory = (req, res, next) => {

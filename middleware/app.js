@@ -5,10 +5,13 @@ const extCategoryRoute = require("./../routes/extCategoryRoute");
 const intCategoryRoute = require("./../routes/intCategoryRoute");
 const colorRoute = require("./../routes/colorRoute");
 const sizeRoute = require("./../routes/sizeRoute");
+const productRoute = require("./../routes/productRoute");
 const app = express();
 app.use(express.json());
 app.use("/api/v1/externalCategories", extCategoryRoute);
 app.use("/api/v1/internalCategories", intCategoryRoute);
+app.use("/api/v1/products", productRoute);
+
 app.use("/api/v1/colors", colorRoute);
 app.use("/api/v1/sizes", sizeRoute);
 app.all("*", function (req, res, next) {
