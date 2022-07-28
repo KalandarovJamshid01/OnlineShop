@@ -8,7 +8,10 @@ const intCategorySchema = new mongoose.Schema({
   externalCategoryId: {
     type: mongoose.Schema.ObjectId,
     required: true,
+    ref: "externalCategories",
   },
 });
 
 const intCategory = mongoose.model("internalCategories", intCategorySchema);
+
+module.exports = intCategory;

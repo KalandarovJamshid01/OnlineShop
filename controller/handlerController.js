@@ -16,26 +16,28 @@ const resFunc = (res, statusCode, data) => {
   }
 };
 
-const getAll = catchErrorAsyncPro(async (req, res, next, Model) => {
-  let datas;
-  const filter = new FeatureApi(req.query, Model)
-    .filter()
-    .sorting()
-    .fields()
-    .pagination();
+const getAll = catchErrorAsyncPro(
+  async (req, res, next, Model, options, options2) => {
+    let datas;
+    const filter = new FeatureApi(req.query, Model)
+      .filter()
+      .sorting()
+      .fields()
+      .pagination();
 
-  if (options) {
-    if (options2) {
-      datas = await filter.databaseQuery.populate(options).populate(options2);
+    if (options) {
+      if (options2) {
+        datas = await filter.databaseQuery.populate(options).populate(options2);
+      } else {
+        datas = await filter.databaseQuery.populate(options);
+      }
     } else {
-      datas = await filter.databaseQuery.populate(options);
+      datas = await filter.databaseQuery;
     }
-  } else {
-    datas = await filter.databaseQuery;
-  }
 
-  resFunc(res, 200, datas);
-});
+    resFunc(res, 200, datas);
+  }
+);
 
 const getOne = catchErrorAsyncPro(async (req, res, next, Model) => {
   const data = await Model.findById(req.params.id);

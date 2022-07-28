@@ -9,8 +9,8 @@ const catchErrorAsync = (funksiya) => {
   return catchFunc;
 };
 const catchErrorAsyncPro = (funksiya) => {
-  const catchFunc = (req, res, next, Model) => {
-    funksiya(req, res, next, Model).catch((err) => {
+  const catchFunc = (req, res, next, Model, options, options2) => {
+    funksiya(req, res, next, Model, options, options2).catch((err) => {
       next(new AppError(err.message, 404));
     });
   };

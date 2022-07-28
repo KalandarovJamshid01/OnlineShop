@@ -7,8 +7,13 @@ const {
   deleteData,
 } = require("./handlerController");
 
+const options = {
+  path: "internalCategories",
+  select: "name -externalCategoryId -_id",
+};
+
 const getAllExtCategory = (req, res, next) => {
-  getAll(req, res, next, ExternalCategory);
+  getAll(req, res, next, ExternalCategory, options);
 };
 
 const getOneExtCategory = (req, res, next) => {
