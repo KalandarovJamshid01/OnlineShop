@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     // validate: [validator.isStrongPassword, "Kuchliroq password kiriting"],
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -43,8 +44,9 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
-  const hashPasword = bcrypt.hash(this.password, 12);
+  const hashPasword = await bcrypt.hash(this.password, 12);
   this.password = hashPasword;
+  console.log(this.password);
   this.passwordConfirm = undefined;
   next();
 });

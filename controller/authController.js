@@ -41,6 +41,32 @@ const signup = catchErrorAsync(async (req, res, next) => {
   });
 });
 
+const signIn = catchErrorAsync(async (req, res, next) => {
+  const { email, password } = { ...req.body };
+  if (!email || !password) {
+    next(new AppError("Email va passwordni kriting", 404));
+  }
+  const user = await User.findOne({ email }).select("+password");
+  if (!user) {
+    return next(new AppError("Siz tizimga kirishingiz kerak", 404));
+  }
+  const tekshirHashga = async (oddiyPassword, hashPassword) => {
+    const tekshir = await bcrypt.compare(oddiyPassword, hashPassword);
+    return tekshir;
+  };
+  console.log(await tekshirHashga(password, user.password));
+    console.log(password);
+  if (!(await tekshirHashga(password, user.password))) {
+    return next(new AppError("Passwordni to'g'ri kririting", 404));
+  }
+  const token = createToken(user._id);
+  saveTokenCookie(res, token);
+  res.status(200).json({
+    status: "Succes",
+    token: token,
+  });
+});
 module.exports = {
   signup,
+  signIn,
 };
