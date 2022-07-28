@@ -8,7 +8,7 @@ const externalCategorySchema = new mongoose.Schema({
 });
 
 const ExternalCategory = mongoose.model(
-  "externalCategory",
+  "externalCategories",
   externalCategorySchema
 );
 
