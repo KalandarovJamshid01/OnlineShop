@@ -1,6 +1,6 @@
 const AppError = require("./../utility/AppError");
 const { catchErrorAsyncPro } = require("./../utility/catchErrorAsync");
-
+const FeatureApi = require("./../utility/FeatureApi");
 const resFunc = (res, statusCode, data) => {
   if (Array.isArray(data)) {
     res.status(statusCode).json({
@@ -17,7 +17,23 @@ const resFunc = (res, statusCode, data) => {
 };
 
 const getAll = catchErrorAsyncPro(async (req, res, next, Model) => {
-  const datas = await Model.find();
+  let datas;
+  const filter = new FeatureApi(req.query, Model)
+    .filter()
+    .sorting()
+    .fields()
+    .pagination();
+
+  if (options) {
+    if (options2) {
+      datas = await filter.databaseQuery.populate(options).populate(options2);
+    } else {
+      datas = await filter.databaseQuery.populate(options);
+    }
+  } else {
+    datas = await filter.databaseQuery;
+  }
+
   resFunc(res, 200, datas);
 });
 
