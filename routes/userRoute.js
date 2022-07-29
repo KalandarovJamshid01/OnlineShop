@@ -6,7 +6,11 @@ router.route("/signup").post(authController.signup);
 router.route("/signin").post(authController.signIn);
 router
   .route("/")
-  .get(authController.protect, userController.getAllUsers)
+  .get(
+    authController.protect,
+    authController.role(["admin"]),
+    userController.getAllUsers
+  )
   .post(userController.addUser);
 router
   .route("/:id")

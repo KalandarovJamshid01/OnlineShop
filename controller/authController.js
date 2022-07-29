@@ -85,12 +85,35 @@ const protect = catchErrorAsync(async (req, res, next) => {
       new AppError("Bunday user mavjud emas,iltimos ro'yxatdan o'ting")
     );
   }
+
+  if (user.passwordChangedDate) {
+    console.log(user.passwordChangedDate.getTime() / 1000);
+    // console.log(tokencha.iat);
+    if (user.passwordChangedDate.getTime() / 1000 > tokenca.iat) {
+      return next(
+        new AppError(
+          "Sizning tokeningiz yaroqsiz! Iltimos qayta tizimga kiring!",
+          401
+        )
+      );
+    }
+  }
   req.user = user;
   next();
 });
+
+const role = (roles) => {
+  return catchErrorAsync(async (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError("Siz bu amaliyotni bajarishga huquqiz yoq"));
+    }
+    next();
+  });
+};
 
 module.exports = {
   signup,
   signIn,
   protect,
+  role,
 };
