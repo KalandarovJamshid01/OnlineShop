@@ -54,8 +54,7 @@ const signIn = catchErrorAsync(async (req, res, next) => {
     const tekshir = await bcrypt.compare(oddiyPassword, hashPassword);
     return tekshir;
   };
-  console.log(await tekshirHashga(password, user.password));
-    console.log(password);
+
   if (!(await tekshirHashga(password, user.password))) {
     return next(new AppError("Passwordni to'g'ri kririting", 404));
   }
@@ -66,7 +65,32 @@ const signIn = catchErrorAsync(async (req, res, next) => {
     token: token,
   });
 });
+
+const protect = catchErrorAsync(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return next(new AppError("Siz tizimga kirishingiz kerak"));
+  }
+  let tokenca = jwt.verify(token, process.env.JWT_SECRET);
+  const user = await User.findById(tokenca.id);
+
+  if (!user) {
+    return next(
+      new AppError("Bunday user mavjud emas,iltimos ro'yxatdan o'ting")
+    );
+  }
+  req.user = user;
+  next();
+});
+
 module.exports = {
   signup,
   signIn,
+  protect,
 };

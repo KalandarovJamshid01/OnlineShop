@@ -4,7 +4,10 @@ const authController = require("./../controller/authController");
 
 router.route("/signup").post(authController.signup);
 router.route("/signin").post(authController.signIn);
-router.route("/").get(userController.getAllUsers).post(userController.addUser);
+router
+  .route("/")
+  .get(authController.protect, userController.getAllUsers)
+  .post(userController.addUser);
 router
   .route("/:id")
   .get(userController.getOneUser)
