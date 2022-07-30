@@ -175,6 +175,7 @@ const resetPassword = catchErrorAsync(async (req, res, next) => {
   next();
 });
 
+
 module.exports = {
   signup,
   signIn,

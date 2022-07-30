@@ -7,8 +7,12 @@ const {
   deleteData,
 } = require("./handlerController");
 
+options = {
+  path: "reviews",
+};
+
 const getAllProducts = (req, res, next) => {
-  getAll(req, res, next, Product);
+  getAll(req, res, next, Product, options);
 };
 
 const getOneProduct = (req, res, next) => {
