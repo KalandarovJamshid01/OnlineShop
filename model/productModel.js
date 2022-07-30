@@ -34,6 +34,14 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "externalCategories",
     },
+    colorId: {
+      type: mongoose.Schema.ObjectId,
+      ref: "colors",
+    },
+    sizeId: {
+      type: mongoose.Schema.ObjectId,
+      ref: "sizes",
+    },
     oldPrice: {
       type: Number,
     },
@@ -53,4 +61,3 @@ productSchema.virtual("reviews", {
 const Product = mongoose.model("products", productSchema);
 
 module.exports = Product;
-

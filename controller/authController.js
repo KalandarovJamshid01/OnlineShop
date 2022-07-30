@@ -174,7 +174,73 @@ const resetPassword = catchErrorAsync(async (req, res, next) => {
   });
   next();
 });
+const updatePassword = catchErrorAsync(async (req, res, next) => {
+  //1.Userni infosini olamiz
+  if (req.body.password === req.body.newPassword) {
+    return next(new AppError("Siz bir xil password kiritmang"), 401);
+  }
 
+  const user = await User.findOne(req.user._id).select("+password");
+
+  if (!user) {
+    return next(new AppError("Malumotlaringiz bazdan topilmadi", 404));
+  }
+
+  //2.check password posy
+  if (!(await bcrypt.compare(req.body.password, user.password))) {
+    return next(new AppError("Paswordni noto'g'ri kiritdingiz", 401));
+  }
+  //3.update password
+  user.password = req.body.newPassword;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+  //4.create jwt
+  const token = createToken(user.id);
+  saveTokenCookie(res, token);
+  res.status(200).json({
+    status: "Succes",
+    token: token,
+    meaasge: "Your password has been updated",
+  });
+});
+
+const updateMe = catchErrorAsync(async (req, res, next) => {
+  // 1) Malumotlarni yangilash
+
+  const user = await User.findById(req.user.id);
+
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  user.photo = req.body.photo || user.photo;
+
+  const newUser = await user.save({ validateBeforeSave: false });
+
+  res.status(201).json({
+    status: "success",
+    data: newUser,
+  });
+});
+
+const deleteMe = catchErrorAsync(async (req, res, next) => {
+  // 1) User ni topamiz
+
+  const user = await User.findById(req.user.id).select("+password");
+
+  // 2) Passwordni tekshirish
+  const tekshir = bcrypt.compare(req.body.password, user.password);
+
+  if (!tekshir) {
+    return next(new AppError("Siz parolni xato kiritdingiz!", 401));
+  }
+
+  user.active = false;
+  await user.save({ validateBeforeSave: false });
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
 
 module.exports = {
   signup,
@@ -183,4 +249,7 @@ module.exports = {
   role,
   forgotPassword,
   resetPassword,
+  updatePassword,
+  updateMe,
+  deleteMe,
 };
