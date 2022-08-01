@@ -29,7 +29,7 @@ block content
                         .navbar-nav.mr-auto.py-0
                             a.nav-item.nav-link.active(href='/home') Home
                             a.nav-item.nav-link(href='shop.html') Shop
-                            a.nav-item.nav-link(href='detail.html') Shop Detail
+                            a.nav-item.nav-link(href='/detail.html') Shop Detail
                             .nav-item.dropdown
                                 a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
                                     | Pages 
@@ -137,7 +137,7 @@ block content
                     a.btn.btn-outline-dark.btn-square(href='')
                       i.fa.fa-search
                 .text-center.py-4
-                  a.h6.text-decoration-none.text-truncate(href='')= product.name
+                  a.h6.text-decoration-none.text-truncate(href=`/product/${product.id}`)= product.name
                   .d-flex.align-items-center.justify-content-center.mt-2
                     h5= `$${product.price}`
                     h6.text-muted.ml-2
@@ -176,29 +176,29 @@ block content
                 .col-lg-3.col-md-4.col-sm-6.pb-1
                     .product-item.bg-light.mb-4
                         .product-img.position-relative.overflow-hidden
-                        img.img-fluid.w-100(src=`img/${product.photo}` alt='')
-                        .product-action
-                            a.btn.btn-outline-dark.btn-square(href='')
-                              i.fa.fa-shopping-cart
-                            a.btn.btn-outline-dark.btn-square(href='')
-                              i.far.fa-heart
-                            a.btn.btn-outline-dark.btn-square(href='')
-                              i.fa.fa-sync-alt
-                            a.btn.btn-outline-dark.btn-square(href='')
-                              i.fa.fa-search
+                            img.img-fluid.w-100(src=`/img/${product.photo}` alt='')
+                            .product-action
+                                a.btn.btn-outline-dark.btn-square(href='')
+                                  i.fa.fa-shopping-cart
+                                a.btn.btn-outline-dark.btn-square(href='')
+                                  i.far.fa-heart
+                                a.btn.btn-outline-dark.btn-square(href='')
+                                  i.fa.fa-sync-alt
+                                a.btn.btn-outline-dark.btn-square(href='')
+                                  i.fa.fa-search
                         .text-center.py-4
-                            a.h6.text-decoration-none.text-truncate(href='')= product.name
-                            .d-flex.align-items-center.justify-content-center.mt-2
-                            h5= `$${product.price}`
-                            h6.text-muted.ml-2
-                            del= `${product.oldPrice}`
+                                a.h6.text-decoration-none.text-truncate(href=`/product/${product.id}`)= product.name
+                                .d-flex.align-items-center.justify-content-center.mt-2
+                                h5= `$${product.price}`
+                                h6.text-muted.ml-2
+                                del= `${product.oldPrice}`
                         .d-flex.align-items-center.justify-content-center.mb-1
-                            each review in product.reviews
-                                -let n = 0
-                                while n<review.rating
-                                    small.fa.fa-star.text-primary.mr-1
-                                    -n++
-                            small= `(${product.reviews.length})`
+                                each review in product.reviews
+                                    -let n = 0
+                                    while n<review.rating
+                                        small.fa.fa-star.text-primary.mr-1
+                                        -n++
+                                small= `(${product.reviews.length})`
     //Vendors start
     .container-fluid.py-5
       .row.px-xl-5

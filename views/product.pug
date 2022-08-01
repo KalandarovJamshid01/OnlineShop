@@ -44,3 +44,116 @@ block content
                                     a.btn.px-0.ml-3(href='')
                                         i.fas.fa-shopping-cart.text-primary
                                         span.badge.text-secondary.border.border-secondary.rounded-circle(style='padding-bottom: 2px;') 0
+    .container-fluid.pb-5
+      .row.px-xl-5
+        .col-lg-5.mb-30
+          #product-carousel.carousel.slide(data-ride='carousel')
+            .carousel-inner.bg-light
+              .carousel-item.active
+                img.w-100.h-100(src=`/img/${product.photo}` alt='Image')
+        .col-lg-7.h-auto.mb-30
+          .h-100.bg-light.p-30
+            h3= product.name
+            .d-flex.mb-3
+              .text-primary.mr-2
+                -let n = 0
+                    while n<reviews[0].rating
+                        small.fas.fa-star
+                        -n++
+                small.pt-1= `(${reviews.length} Reviews)`
+            h3.font-weight-semi-bold.mb-4= `$${product.price}`
+            p.mb-4= product.summary
+            .d-flex.mb-3
+              strong.text-dark.mr-3 Sizes:
+              form
+                each size in sizes
+                    .custom-control.custom-radio.custom-control-inline
+                      input#size-1.custom-control-input(type='radio' name='size')
+                      label.custom-control-label(for='size-1')= size.name
+            .d-flex.mb-4
+              strong.text-dark.mr-3 Colors:
+              form
+                each color in colors
+                    .custom-control.custom-radio.custom-control-inline
+                      input#color-1.custom-control-input(type='radio' name='color')
+                      label.custom-control-label(for='color-1')= color.name
+            .d-flex.align-items-center.mb-4.pt-2
+              .input-group.quantity.mr-3(style='width: 130px;')
+                .input-group-btn
+                  button.btn.btn-primary.btn-minus
+                    i.fa.fa-minus
+                input.form-control.bg-secondary.border-0.text-center(type='text' value='1')
+                .input-group-btn
+                  button.btn.btn-primary.btn-plus
+                    i.fa.fa-plus
+              button.btn.btn-primary.px-3
+                i.fa.fa-shopping-cart.mr-1
+                |  Add To
+                |                             Cart
+            .d-flex.pt-2
+              strong.text-dark.mr-2 Share on:
+              .d-inline-flex
+                a.text-dark.px-2(href='')
+                  i.fab.fa-facebook-f
+                a.text-dark.px-2(href='')
+                  i.fab.fa-twitter
+                a.text-dark.px-2(href='')
+                  i.fab.fa-linkedin-in
+                a.text-dark.px-2(href='')
+                  i.fab.fa-pinterest
+      .row.px-xl-5
+        .col
+          .bg-light.p-30
+            .nav.nav-tabs.mb-4
+              a.nav-item.nav-link.text-dark.active(data-toggle='tab' href='#tab-pane-1') Description
+              a.nav-item.nav-link.text-dark(data-toggle='tab' href='#tab-pane-2') Information
+              a.nav-item.nav-link.text-dark(data-toggle='tab' href='#tab-pane-3')= `Reviews(${reviews.length})`
+            .tab-content
+              #tab-pane-1.tab-pane.fade.show.active
+                h4.mb-3 Product Description
+                p= product.description
+              #tab-pane-2.tab-pane.fade
+                h4.mb-3 Additional Information
+                p= product.information
+              #tab-pane-3.tab-pane.fade
+                .row
+                  .col-md-6
+                    h4.mb-4= `${reviews.length} review for ${product.name}`
+                    each review in reviews
+                        .media.mb-4
+                          img.img-fluid.mr-3.mt-1(src=`/img/${review.userId.photo}` alt='Image' style='width: 45px;')
+                          .media-body
+                            h6= review.userId.name
+                              small
+                                | - 
+                                i 01 Jan 2045
+                            .text-primary.mb-2
+                              i.fas.fa-star
+                              i.fas.fa-star
+                              i.fas.fa-star
+                              i.fas.fa-star-half-alt
+                              i.far.fa-star
+                            p= review.review
+                  .col-md-6
+                    h4.mb-4 Leave a review
+                    small Your email address will not be published. Required fields are marked *
+                    .d-flex.my-3
+                      p.mb-0.mr-2 Your Rating * :
+                      .text-primary
+                        i.far.fa-star
+                        i.far.fa-star
+                        i.far.fa-star
+                        i.far.fa-star
+                        i.far.fa-star
+                    form
+                      .form-group
+                        label(for='message') Your Review *
+                        textarea#message.form-control(cols='30' rows='5')
+                      .form-group
+                        label(for='name') Your Name *
+                        input#name.form-control(type='text')
+                      .form-group
+                        label(for='email') Your Email *
+                        input#email.form-control(type='email')
+                      .form-group.mb-0
+                        input.btn.btn-primary.px-3(type='submit' value='Leave Your Review')

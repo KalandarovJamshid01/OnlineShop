@@ -6,6 +6,8 @@ const ExternalCategory = require("./../model/externalCategoryModel");
 const InternalCategory = require("./../model/internalCategoryModel");
 const Service = require("./../model/serviceModel");
 const Fashion = require("./../model/fashionModel");
+const Size = require("./../model/sizeModel");
+const Color = require("./../model/colorModel");
 const home = catchErrorAsync(async (req, res, next) => {
   const externalCategory = await ExternalCategory.find()
     .populate({
@@ -54,10 +56,18 @@ const getOneCategory = catchErrorAsync(async (req, res, next) => {
 const getOneProduct = catchErrorAsync(async (req, res, next) => {
   const externalCategory = await ExternalCategory.find();
   const product = await Product.findById(req.params.id);
+  const sizes = await Size.find();
+  const colors = await Color.find();
   const review = await Review.find({ productId: req.params.id }).populate({
     path: "userId",
     select: "name photo",
   });
-    res.status(200).render("")
+  res.status(200).render("product", {
+    extCategories: externalCategory,
+    product: product,
+    reviews: review,
+    colors: colors,
+    sizes: sizes,
+  });
 });
 module.exports = { home, getOneCategory, getOneProduct };
