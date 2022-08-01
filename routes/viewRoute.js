@@ -3,5 +3,6 @@ const viewController = require("./../controller/viewController");
 
 router.route("/").get(viewController.home);
 router.route("/home").get(viewController.home);
-
-module.exports = router
+router.route("/category/:id").get(viewController.getOneCategory);
+router.route("/product/:id").get(viewController.getOneProduct);
+module.exports = router;

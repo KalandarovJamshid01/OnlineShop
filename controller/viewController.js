@@ -35,4 +35,29 @@ const home = catchErrorAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { home };
+const getOneCategory = catchErrorAsync(async (req, res, next) => {
+  const externalCategory = await ExternalCategory.find();
+  const category = await ExternalCategory.findById(req.params.id);
+  const products = await Product.find({
+    externalCategoryId: req.params.id,
+  }).populate({
+    path: "reviews",
+    select: "rating",
+  });
+  res.status(200).render("category", {
+    extCategories: externalCategory,
+    category: category,
+    products: products,
+  });
+});
+
+const getOneProduct = catchErrorAsync(async (req, res, next) => {
+  const externalCategory = await ExternalCategory.find();
+  const product = await Product.findById(req.params.id);
+  const review = await Review.find({ productId: req.params.id }).populate({
+    path: "userId",
+    select: "name photo",
+  });
+    res.status(200).render("")
+});
+module.exports = { home, getOneCategory, getOneProduct };
