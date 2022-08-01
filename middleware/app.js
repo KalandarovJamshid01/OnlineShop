@@ -18,6 +18,7 @@ const userRoute = require("./../routes/userRoute");
 const reviewRoute = require("./../routes/reviewRoute");
 const fashionRoute = require("./../routes/fashionRoute");
 const viewRoute = require("./../routes/viewRoute");
+const serviceRoute = require("./../routes/serviceRoute");
 const app = express();
 
 app.use(helmet());
@@ -54,6 +55,7 @@ app.use("/api/v1/reviews", reviewRoute);
 app.use("/api/v1/colors", colorRoute);
 app.use("/api/v1/sizes", sizeRoute);
 app.use("/api/v1/fashions", fashionRoute);
+app.use("/api/v1/services", serviceRoute);
 app.all("*", function (req, res, next) {
   next(new AppError(`this url hasn't found:${req.originalUrl}`, 404));
 });
