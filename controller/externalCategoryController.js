@@ -13,7 +13,7 @@ const options = {
 };
 const options2 = {
   path: "products",
-  select: "name",
+  select: "name photo",
 };
 
 const getAllExtCategory = (req, res, next) => {

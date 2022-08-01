@@ -5,14 +5,33 @@ const Review = require("./../model/reviewModel");
 const ExternalCategory = require("./../model/externalCategoryModel");
 const InternalCategory = require("./../model/internalCategoryModel");
 const Service = require("./../model/serviceModel");
+const Fashion = require("./../model/fashionModel");
 const home = catchErrorAsync(async (req, res, next) => {
-  const externalCategory = await ExternalCategory.find();
-  const product = await Product.find();
-  const review = await Review.find();
+  const externalCategory = await ExternalCategory.find()
+    .populate({
+      path: "internalCategories",
+      select: "name -externalCategoryId -_id",
+    })
+    .populate({
+      path: "products",
+      select: "name photo -_id -externalCategoryId",
+    });
+  console.log(externalCategory);
+  const product = await Product.find().populate({
+    path: "reviews",
+    select: "rating",
+  });
   const internalCategory = await InternalCategory.find();
   const service = await Service.find();
+  const fashion = await Fashion.find();
+  //   const photo = externalCategory.products[0];
   res.render("home", {
-    externalCategory: externalCategory,
+    // photo: photo,
+    extCategories: externalCategory,
+    products: product,
+    intCategoryies: internalCategory,
+    services: service,
+    fashions: fashion,
   });
 });
 
