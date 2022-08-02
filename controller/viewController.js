@@ -8,6 +8,7 @@ const Service = require("./../model/serviceModel");
 const Fashion = require("./../model/fashionModel");
 const Size = require("./../model/sizeModel");
 const Color = require("./../model/colorModel");
+const axios = require("axios");
 const home = catchErrorAsync(async (req, res, next) => {
   const externalCategory = await ExternalCategory.find()
     .populate({
@@ -18,7 +19,6 @@ const home = catchErrorAsync(async (req, res, next) => {
       path: "products",
       select: "name photo -_id -externalCategoryId",
     });
-  console.log(externalCategory);
   const product = await Product.find().populate({
     path: "reviews",
     select: "rating",
@@ -38,7 +38,11 @@ const home = catchErrorAsync(async (req, res, next) => {
 });
 
 const getOneCategory = catchErrorAsync(async (req, res, next) => {
-  const externalCategory = await ExternalCategory.find();
+  const externalCategory = await axios({
+    method: "GET",
+    url: "http://127.0.0.1:8000/api/v1/externalCategories",
+  });
+  console.log(externalCategory);
   const category = await ExternalCategory.findById(req.params.id);
   const products = await Product.find({
     externalCategoryId: req.params.id,
