@@ -1,4 +1,3 @@
-const { get } = require("mongoose");
 const extCategoryCtrl = require("./../controller/externalCategoryController");
 const router = require("express").Router();
 

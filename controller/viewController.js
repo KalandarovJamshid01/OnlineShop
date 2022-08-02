@@ -9,6 +9,7 @@ const Fashion = require("./../model/fashionModel");
 const Size = require("./../model/sizeModel");
 const Color = require("./../model/colorModel");
 const axios = require("axios");
+let data;
 const home = catchErrorAsync(async (req, res, next) => {
   const externalCategory = await ExternalCategory.find()
     .populate({

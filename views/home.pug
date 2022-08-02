@@ -69,7 +69,7 @@ block content
               a.text-decoration-none(href=`/category/${category._id}`)
                 .cat-item.img-zoom.d-flex.align-items-center.mb-4
                   .overflow-hidden(style='width: 100px; height: 100px;')
-                    img.img-fluid(src=`img/` alt=`${category.name} image`)
+                    img.img-fluid(src=`img/${category.photo}` alt=`${category.name} image`)
                   .flex-fill.pl-3
                     h6= category.name
                     small.text-body=  `${category.products.length} Products`

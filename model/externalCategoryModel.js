@@ -6,6 +6,9 @@ const externalCategorySchema = new mongoose.Schema(
       type: String,
       required: [true, "Siz ismni kiritishingiz shart"],
     },
+    photo: {
+      type: String,
+    },
   },
   {
     toJSON: {
