@@ -1,0 +1,15 @@
+extends base
+block content
+    .container
+        .login_form 
+            h2 Log In To Form 
+            form.form
+                .form__group
+                    label.form__label(for='email') Email address
+                    input#email.form__input(type='email', placeholder='you@example.com', required)
+                .form__group.ma-bt-md
+                    label.form__label(for='password') Password
+                    input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                .form__group
+                    button(type="submit").btn.btn--green Login
+    script(src="/js/login.js") 

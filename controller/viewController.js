@@ -75,4 +75,11 @@ const getOneProduct = catchErrorAsync(async (req, res, next) => {
     sizes: sizes,
   });
 });
-module.exports = { home, getOneCategory, getOneProduct };
+
+const signin = catchErrorAsync(async (req, res, next) => {
+  const externalCategory = await ExternalCategory.find();
+  res.status(200).render("signin", {
+    extCategories: externalCategory,
+  });
+});
+module.exports = { home, getOneCategory, getOneProduct, signin };

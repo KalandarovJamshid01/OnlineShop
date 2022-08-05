@@ -9,10 +9,8 @@
         .col-lg-6.text-center.text-lg-right 
             .d-inline-flex.align-items-center 
                 .btn-group 
-                    button(type="button" data-toggle="dropdown").btn.btn-sm.btn-light.dropdown-toggle My Account 
-                    .dropdown-menu.dropdown-menu-right
-                        button(type="button").dropdown-items Sign In
-                        button(type="button").dropdown-items Sign Up 
+                    button(type="button", href="signin").dropdown-items Sign In
+                    button(type="button").dropdown-items Sign Up 
                 .btn-group.mx-2
                     button(type="button" data-toggle="dropdown").btn.btn-sm.btn-light.dropdown-toggle USD
                     .dropdown-menu.dropdown-menu-right
@@ -59,7 +57,7 @@
         .navbar-nav.w-100
           .nav-item.dropdown.dropright
             each extCategory in extCategories
-                a.nav-link.dropdown-toggle(href=`/category/${extCategory._id}` data-toggle='dropdown')= extCategory.name  
+                a.nav-link.dropdown-toggle(href=`/category/${extCategory._id}`, data-toggle='dropdown')= extCategory.name  
                     //- i.fa.fa-angle-right.float-right.mt-1
                     //- each intCategory in extCategory.internalCategories  
                     //-     .dropdown-menu.position-absolute.rounded-0.border-0.m-0
